@@ -1,44 +1,19 @@
 const mongoose = require("mongoose");
+const db = require('./index.js');
+mongoose.Promise = global.Promise;
 
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
-const ProdReview = new Schema({
-  product: String,
-  page: Number,
-  count: Number,
-  results: [
-    {
-      review_id: Number,
-      rating: Number,
-      summary: String,
-      recommend: Boolean,
-      response: String,
-      body: String,
-      date: String,
-      reviewer_name: String,
-      helpfulness: Number,
-      reported: Boolean,
-      photos: [{
-          id: Number,
-          url: String
-        },
-      ]
-    },
-  ]
-});
-
 const ProdMeta = new Schema({
-  product_id: String,
+  product_id: Number,
   ratings: {
     2: Number,
     3: Number,
     4: Number,
-    // ...
   },
   recommended: {
     0: Number
-    // ...
   },
   characteristics: {
     Size: {
@@ -60,5 +35,6 @@ const ProdMeta = new Schema({
 // investigate nested collections
 // shape of data client is expecting
 
-mongoose.model('ProdReview', ProdReview);
-mongoose.model('ProdMeta', ProdMeta);
+const ReviewMeta = mongoose.model('ProdMeta', ProdMeta);
+
+module.exports = ReviewMeta;
