@@ -30,6 +30,16 @@ const ProdReview = new Schema({
   ]
 });
 
+ProdReview.pre('find', function() {
+  this._startTime = Date.now();
+});
+
+ProdReview.post('find', function() {
+  if (this._startTime != null) {
+    console.log('Runtime in MS: ', Date.now() - this._startTime);
+  }
+});
+
 // convert prod id to a number, convert to string when serving to client to save local storage
 // investigate nested collections
 // shape of data client is expecting

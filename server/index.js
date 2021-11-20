@@ -16,8 +16,8 @@ app.get('/', (req, res) => {
 app.get('/api/reviews/:page&:count&:sort&:product_id', function(req, res) {
   let { page, count, sort, product_id } = req.params;
   product_id = Number(product_id);
-  console.log(req.params);
-  console.log(db);
+  // console.log(req.params);
+  // console.log(db);
   Review.find({product: product_id})
     .then((data) => res.send(data))
     .then((data) => console.log(data))
