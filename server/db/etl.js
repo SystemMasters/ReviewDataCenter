@@ -1,24 +1,53 @@
+const mongoose = require("mongoose");
+mongoose.Promise = global.Promise;
+/*
 const db  = require('./index.js');
 const Review = require('./reviewmodel.js')
 const ReviewMeta = require('./reviewmeta.js')
 
+// create custom connection
+const Conn = mongoose.createConnection();
+
+// connect to database
+
 // could use for logic to fill the database
 
-db.reviews.aggregate([
+
+const start = async function() {
+  await Conn.openUri('mongodb://localhost/ProdReviews');
+
+  await Conn.collection('reviews').aggregate([
+    {
+      $lookup:
+        {
+          from: "reviews_photos",
+          localField: "id",
+          foreignField: "review_id",
+          as: "photos"
+        }
+   },
    {
-     $lookup:
-       {
-         from: "reviews_photos",
-         localField: "id",
-         foreignField: "review_id",
-         as: "photos"
+     $sample:
+     {
+       size: 500
+     }
+   },
+   {
+      $merge:
+      {
+         into: "TESTING",
+         on: "_id",
+         whenMatched: "replace",
+         whenNotMatched: "insert"
        }
-  }
-],
-{
-   allowDiskUse: true
- }
-)
+    }
+ ])
+ console.log('hmm')
+}
+
+start()
+  .then(() => console.log('YIPPIEE!'))
+  .catch((err) => console.log(err));
 
 db.review.aggregate([
    {
@@ -42,3 +71,25 @@ const insertSampleBlogs = function() {
 };
 
 insertSampleBlogs();
+
+db.reviews'.aggregate([
+  {
+    $lookup:
+      {
+        from: "reviews_photos",
+        localField: "id",
+        foreignField: "review_id",
+        as: "photos"
+      }
+ },
+ {
+    $out:
+    {
+       db: 'ProdReviews',
+       coll: 'results'
+     }
+  }
+], {
+  allowDiskUse: true,
+  maxTimeMS: 0
+})

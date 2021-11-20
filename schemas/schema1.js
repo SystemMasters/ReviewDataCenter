@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 const ProdReview = new Schema({
-  product: String,
+  product: Number,
   page: Number,
   count: Number,
   results: [
@@ -29,7 +29,7 @@ const ProdReview = new Schema({
 });
 
 const ProdMeta = new Schema({
-  product_id: String,
+  product_id: Number,
   ratings: {
     2: Number,
     3: Number,
@@ -60,5 +60,22 @@ const ProdMeta = new Schema({
 // investigate nested collections
 // shape of data client is expecting
 
-mongoose.model('ProdReview', ProdReview);
-mongoose.model('ProdMeta', ProdMeta);
+// mongoose.model('ProdReview', ProdReview);
+// mongoose.model('ProdMeta', ProdMeta);
+
+
+
+// {
+//   from: "reviews_photos",
+//   localField: "id",
+//   foreignField: "review_id",
+//   as: "photos"
+//   }
+// {
+//   into: 'reviewsnew',
+//   on: '_id',
+//   whenMatched: 'replace',
+//   whenNotMatched: 'insert'
+// }
+
+// mongod -f "C:\Program Files\MongoDB\Server\4.4\bin\mongod.cfg"
