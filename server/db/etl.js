@@ -96,9 +96,29 @@ db.reviews'.aggregate([
 */
 const getMeta = async function(product_id) {
 
-  // await Conn.openUri('mongodb://localhost/ProdReviews');
-  console.log('hmm', product_id);
-  let product = await db.collection('review').find({id: product_id});
+  let product = await db.collection('review').aggregate([
+    {
+      $match:
+        {
+          id: product_id
+        }
+   },
+   {
+     $sample:
+     {
+       size: 500
+     }
+   },
+   {
+      $merge:
+      {
+         into: "TESTING",
+         on: "_id",
+         whenMatched: "replace",
+         whenNotMatched: "insert"
+       }
+    }
+ ])
   if ((await product.count()) === 0) {
     console.log("No documents found!");
   }

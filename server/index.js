@@ -94,8 +94,6 @@ app.get('/api/reviews/meta/', function(req, res) {
           res.send(metaVals);
         });
     })
-  // ReviewMeta.find().sort({"createdAt": -1})
-  //   .then((data) => res.send(data));
 });
 
 // app.patch('/api/blogs/:blogId', function(req, res) {
