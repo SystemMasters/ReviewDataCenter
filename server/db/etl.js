@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
-/*
+
 const db  = require('./index.js');
 const Review = require('./reviewmodel.js')
 const ReviewMeta = require('./reviewmeta.js')
 
 // create custom connection
 const Conn = mongoose.createConnection();
-
+/*
 // connect to database
 
 // could use for logic to fill the database
@@ -93,3 +93,17 @@ db.reviews'.aggregate([
   allowDiskUse: true,
   maxTimeMS: 0
 })
+*/
+const getMeta = async function(product_id) {
+
+  // await Conn.openUri('mongodb://localhost/ProdReviews');
+  console.log('hmm', product_id);
+  let product = await db.collection('review').find({id: product_id});
+  if ((await product.count()) === 0) {
+    console.log("No documents found!");
+  }
+  // console.log('hmm', product);
+  // return product;
+}
+
+module.exports = getMeta;
