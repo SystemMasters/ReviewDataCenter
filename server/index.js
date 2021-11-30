@@ -22,10 +22,11 @@ app.get('/api/reviews/', function(req, res) {
   let count = searchParams.get('count');
   let sort = searchParams.get('sort');
   product_id = Number(product_id);
+  console.log('hmm', product_id);
   Review.find({product: product_id})
-    .then((data) => res.send(data))
-    .then((data) => console.log('success'))
-    .catch((err) => res.send(err));
+    .then((data) => res.status(200).send(data))
+    .then((data) => console.log('success', data))
+    .catch((err) => res.status(400).send(err));
 });
 
 app.get('/api/reviews/meta/', function(req, res) {
